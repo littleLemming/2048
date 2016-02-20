@@ -1,44 +1,39 @@
 import random
+import pprint
 
 class Field():
 
 	def __init__(self,size):
 		self.field_size = size if size > 2 else 4
-		self.field = [[0]*self.field_size]*self.field_size
+		self.field = [[0]*self.field_size for i in range(self.field_size)]
 
-	def get_column(self,x):
-		if x < self.field_size:
-			column = [0]*self.field_size
-			for i in range(0,self.field_size):
-				column[i] = self.field[x][i]
+	def get_field(self):
+		return self.field
+
+	def get_row(self,row_num):
+		if row_num < self.field_size:
+			return self.field[row_num]
 		return None
 
-	def get_row(self,y):
-		if y < self.field_size:
+	def get_column(self,column_num):
+		if column_num < self.field_size:
 			column = [0]*self.field_size
 			for i in range(0,self.field_size):
-				column[i] = self.field[i][y]
+				column[i] = self.field[i][column_num]
+			return column
 		return None
 
-	def get_value(self,x,y):
-		if x < self.field_size and y < self.field_size:
-			return self.field[x][y]
+	def get_value(self,row,column):
+		if row < self.field_size and column < self.field_size:
+			return self.field[row][column]
 		return None
 
 	# should be just used for testing and maybe from inside Field...dunno yet
-	def set_value(self,x,y,value):
-		if x < self.field_size and y < self.field_size:
-			self.field[x][y] = value
-
-	# returns a prettier string-version of the field until the ui is written use this thingie to look at it..
-	def pretty_print(self):
-		string = ''
-		for y in range(0,self.field_size):
-			for x in range(0,self.field_size):
-				string += '{0} '.format(self.field[x][y])
-			string += '\n'
-		string = string[:-1]
-		return string
+	def set_value(self,row,column,value):
+		if row < self.field_size and column < self.field_size:
+			self.field[row][column] = value
+			return True
+		return False
 
 
 class Game():
@@ -91,4 +86,15 @@ class Game():
 # field:
 field = Field(4)
 
-print field.pretty_print()
+#print field.pretty_print()
+
+pp = pprint.PrettyPrinter(indent=4)
+pp.pprint(field.get_field())
+
+field.set_value(1,2,4)
+
+pp.pprint(field.get_field())
+
+print field.get_column(2)
+
+#print field.pretty_print()
