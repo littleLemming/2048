@@ -3,27 +3,42 @@ import random
 class Field():
 
 	def __init__(self,size):
-		field_size = size if size > 1 else 4
-		field = [[0]*field_size]*field_size
+		self.field_size = size if size > 2 else 4
+		self.field = [[0]*self.field_size]*self.field_size
 
 	def get_column(self,x):
-		if x < field_size:
-			column = [0]*field_size
-			for i in range(0,field_size):
-				column[i] = field_size[x][i]
+		if x < self.field_size:
+			column = [0]*self.field_size
+			for i in range(0,self.field_size):
+				column[i] = self.field[x][i]
 		return None
 
 	def get_row(self,y):
-		if y < field_size:
-			column = [0]*field_size
-			for i in range(0,field_size):
-				column[i] = field_size[i][y]
+		if y < self.field_size:
+			column = [0]*self.field_size
+			for i in range(0,self.field_size):
+				column[i] = self.field[i][y]
 		return None
 
 	def get_value(self,x,y):
-		if x < field_size and y < field_size:
-			return field[x][y]
+		if x < self.field_size and y < self.field_size:
+			return self.field[x][y]
 		return None
+
+	# should be just used for testing and maybe from inside Field...dunno yet
+	def set_value(self,x,y,value):
+		if x < self.field_size and y < self.field_size:
+			self.field[x][y] = value
+
+	# returns a prettier string-version of the field until the ui is written use this thingie to look at it..
+	def pretty_print(self):
+		string = ''
+		for y in range(0,self.field_size):
+			for x in range(0,self.field_size):
+				string += '{0} '.format(self.field[x][y])
+			string += '\n'
+		string = string[:-1]
+		return string
 
 
 class Game():
@@ -71,4 +86,9 @@ class Game():
 	def move_right(self):
 		split('r')
 
-game = Game(9)
+###############TESTING###############
+
+# field:
+field = Field(4)
+
+print field.pretty_print()
