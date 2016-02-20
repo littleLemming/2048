@@ -7,17 +7,22 @@ class Field():
 		field = [[0]*field_size]*field_size
 
 	def get_column(self,x):
-		if x < size:
+		if x < field_size:
 			column = [0]*field_size
 			for i in range(0,field_size):
 				column[i] = field_size[x][i]
 		return None
 
 	def get_row(self,y):
-		if y < size:
+		if y < field_size:
 			column = [0]*field_size
 			for i in range(0,field_size):
 				column[i] = field_size[i][y]
+		return None
+
+	def get_value(self,x,y):
+		if x < field_size and y < field_size:
+			return field[x][y]
 		return None
 
 
