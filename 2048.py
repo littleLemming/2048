@@ -6,6 +6,21 @@ class Field():
 		field_size = size if size > 1 else 4
 		field = [[0]*field_size]*field_size
 
+	def get_column(self,x):
+		if x < size:
+			column = [0]*field_size
+			for i in range(0,field_size):
+				column[i] = field_size[x][i]
+		return None
+
+	def get_row(self,y):
+		if y < size:
+			column = [0]*field_size
+			for i in range(0,field_size):
+				column[i] = field_size[i][y]
+		return None
+
+
 class Game():
 
 	# tupel - x,y,value
