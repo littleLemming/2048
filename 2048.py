@@ -41,13 +41,25 @@ class Field():
 				return False
 		return True
 
+	def count_empty_row(self,row):
+		count = 0
+		for i in range(self.field_size):
+			if field[row][i] == 0:
+				count += 1
+		return count
+
 	def is_full_column(self,column):
 		for i in range(self.field_size):
 			if field[i][column] == 0:
 				return False
 		return True
 
-
+	def count_empty_column(self,column):
+		count = 0
+		for i in range(self.field_size):
+			if field[i][column] == 0:
+				count += 1
+		return count
 
 	def add_random_number():
 		return
