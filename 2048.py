@@ -18,7 +18,7 @@ class Field():
 	def get_column(self,column_num):
 		if column_num < self.field_size:
 			column = [0]*self.field_size
-			for i in range(0,self.field_size):
+			for i in range(self.field_size):
 				column[i] = self.field[i][column_num]
 			return column
 		return None
@@ -34,6 +34,23 @@ class Field():
 			self.field[row][column] = value
 			return True
 		return False
+
+	def is_full_row(self,row):
+		for i in range(self.field_size):
+			if field[row][i] == 0:
+				return False
+		return True
+
+	def is_full_column(self,column):
+		for i in range(self.field_size):
+			if field[i][column] == 0:
+				return False
+		return True
+
+
+
+	def add_random_number():
+		return
 
 
 class Game():
@@ -92,6 +109,8 @@ pp = pprint.PrettyPrinter(indent=4)
 pp.pprint(field.get_field())
 
 field.set_value(1,2,4)
+field.set_value(0,2,2)
+field.set_value(3,3,2)
 
 pp.pprint(field.get_field())
 
