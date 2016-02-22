@@ -24,18 +24,21 @@ class Field():
 		return None
 
 	def get_value(self,row,column):
+		print "get_value, row: {0}, column: {1}".format(row,column)
 		if row < self.field_size and column < self.field_size:
 			return self.field[row][column]
 		return None
 
 	# should be just used for testing and maybe from inside Field...dunno yet
 	def set_value(self,row,column,value):
+		print "set_value, row: {0}, column: {1}".format(row,column)
 		if row < self.field_size and column < self.field_size:
 			self.field[row][column] = value
 			return True
 		return False
 
 	def is_full_row(self,row):
+		print "is_full_row, row: {0}, i's:".format(row)
 		for i in range(self.field_size):
 			if self.field[row][i] == 0:
 				return False
@@ -43,18 +46,23 @@ class Field():
 
 	def count_empty_row(self,row):
 		count = 0
+		print "count_empty_row, row: {0}, i's:".format(row)
 		for i in range(self.field_size):
+			print i
 			if self.field[row][i] == 0:
 				count += 1
 		return count
 
 	def is_full_column(self,column):
+		print "is_full_column, column: {0}, i's:".format(column)
 		for i in range(self.field_size):
+			print i
 			if self.field[i][column] == 0:
 				return False
 		return True
 
 	def count_empty_column(self,column):
+		print "count_empty_column: {0}, i's:".format(column)
 		count = 0
 		for i in range(self.field_size):
 			if self.field[i][column] == 0:
@@ -77,7 +85,7 @@ class Field():
 			row = random.randint(0,self.field_size)
 			while self.is_full_row(row):row = random.randint(0,self.field_size)
 			column = random.randint(0,self.field_size)
-			while self.is_empty_spot(row,column):column = random.randint(0,self.field_size)
+			while self.is_full_spot(row,column):column = random.randint(0,self.field_size)
 			value = random.randint(0,2)
 			value = 2 if value == 0 or value == 1 else 4 # not yet sure if this would be the right ratio
 			self.field[row][column] = value
