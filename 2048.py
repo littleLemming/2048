@@ -61,18 +61,28 @@ class Field():
 				count += 1
 		return count
 	
-	def is_full_field(self,row,column):
+	def is_full_spot(self,row,column):
 		return not self.field[row][column] == 0
 
+	def is_full_fiel(self):
+		for i in range(self.field_size):
+			if not is_full_row(i):
+				return False
+		return True
+
 	def add_random_number(self):
+		# TODO: testing. a lot of testing
 		# ?optimization? - choose randint from list of already calculated empty rows/columns -> will see how this version does
-		while is_full_row(row = random.randint(0,self.field_size)):continue
-		while is_empty_field(row,(column = random.randint(0,self.field_size))):continue
-		value = random.randint(0,2)
-		value = 2 if value == 0 or value == 1 else 4 # not yet sure if this would be the right ratio
-		self.field[row][column] = value
-
-
+		if not is_full_fiel():
+			row = random.randint(0,self.field_size)
+			while is_full_row(row):row = random.randint(0,self.field_size)
+			column = random.randint(0,self.field_size)
+			while is_empty_spot(row,column):column = random.randint(0,self.field_size)
+			value = random.randint(0,2)
+			value = 2 if value == 0 or value == 1 else 4 # not yet sure if this would be the right ratio
+			self.field[row][column] = value
+			return True
+		return False
 
 
 class Game():
