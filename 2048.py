@@ -64,20 +64,20 @@ class Field():
 	def is_full_spot(self,row,column):
 		return not self.field[row][column] == 0
 
-	def is_full_fiel(self):
+	def is_full_field(self):
 		for i in range(self.field_size):
-			if not is_full_row(i):
+			if not self.is_full_row(i):
 				return False
 		return True
 
 	def add_random_number(self):
 		# TODO: testing. a lot of testing
 		# ?optimization? - choose randint from list of already calculated empty rows/columns -> will see how this version does
-		if not is_full_fiel():
+		if not self.is_full_field():
 			row = random.randint(0,self.field_size)
-			while is_full_row(row):row = random.randint(0,self.field_size)
+			while self.is_full_row(row):row = random.randint(0,self.field_size)
 			column = random.randint(0,self.field_size)
-			while is_empty_spot(row,column):column = random.randint(0,self.field_size)
+			while self.is_empty_spot(row,column):column = random.randint(0,self.field_size)
 			value = random.randint(0,2)
 			value = 2 if value == 0 or value == 1 else 4 # not yet sure if this would be the right ratio
 			self.field[row][column] = value
@@ -146,6 +146,8 @@ field.set_value(3,3,2)
 
 pp.pprint(field.get_field())
 
-print field.get_column(2)
+for i in range(5):
+	field.add_random_number()
+	pp.pprint(field.get_field())
 
 #print field.pretty_print()
