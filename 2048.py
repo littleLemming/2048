@@ -92,10 +92,12 @@ class Field():
 		# TODO: testing. a lot of testing
 		# ?optimization? - choose randint from list of already calculated empty rows/columns -> will see how this version does
 		if not self.is_full_field():
-			row = random.randint(0,self.field_size)
+			row = random.randint(0,self.field_size-1)
 			while self.is_full_row(row):row = random.randint(0,self.field_size-1)
+			print "ROW: {0}".format(row)
 			column = random.randint(0,self.field_size-1)
 			while self.is_full_spot(row,column):column = random.randint(0,self.field_size-1)
+			print "COLUMN: {0}".format(column)
 			value = random.randint(0,2)
 			value = 2 if value == 0 or value == 1 else 4 # not yet sure if this would be the right ratio
 			self.field[row][column] = value
