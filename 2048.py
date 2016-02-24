@@ -76,7 +76,7 @@ class Field():
 		return count
 	
 	def is_full_spot(self,row,column):
-		print "is_full_spot"
+		print "is_full_spot row:{0}, column:{1}".format(row,column)
 		return not self.field[row][column] == 0
 
 	def is_full_field(self):
