@@ -40,6 +40,7 @@ class Field():
 	def is_full_row(self,row):
 		print "is_full_row, row: {0}, i's:".format(row)
 		for i in range(self.field_size):
+			print i
 			if self.field[row][i] == 0:
 				return False
 		return True
@@ -65,6 +66,7 @@ class Field():
 		print "count_empty_column: {0}, i's:".format(column)
 		count = 0
 		for i in range(self.field_size):
+			print i
 			if self.field[i][column] == 0:
 				count += 1
 		return count
@@ -146,11 +148,11 @@ field = Field(4)
 #print field.pretty_print()
 
 pp = pprint.PrettyPrinter(indent=4)
-pp.pprint(field.get_field())
+#pp.pprint(field.get_field())
 
-field.set_value(1,2,4)
-field.set_value(0,2,2)
-field.set_value(3,3,2)
+#field.set_value(1,2,4)
+#field.set_value(0,2,2)
+#field.set_value(3,3,2)
 
 pp.pprint(field.get_field())
 
