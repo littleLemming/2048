@@ -4,22 +4,18 @@ import pprint
 class Field():
 
 	def __init__(self,size):
-		print "init size: {0}".format(size)
 		self.field_size = size if size > 2 else 4
 		self.field = [[0]*self.field_size for i in range(self.field_size)]
 
 	def get_field(self):
-		print "get_field"
 		return self.field
 
 	def get_row(self,row_num):
-		print "get_row, row_num: {0}".format(row_num)
 		if row_num < self.field_size:
 			return self.field[row_num]
 		return None
 
 	def get_column(self,column_num):
-		print "get_column, column_num: {0}".format(column_num)
 		if column_num < self.field_size:
 			column = [0]*self.field_size
 			for i in range(self.field_size):
@@ -28,78 +24,60 @@ class Field():
 		return None
 
 	def get_value(self,row,column):
-		print "get_value, row: {0}, column: {1}".format(row,column)
 		if row < self.field_size and column < self.field_size:
 			return self.field[row][column]
 		return None
 
 	# should be just used for testing and maybe from inside Field...dunno yet
 	def set_value(self,row,column,value):
-		print "set_value, row: {0}, column: {1}".format(row,column)
 		if row < self.field_size and column < self.field_size:
 			self.field[row][column] = value
 			return True
 		return False
 
 	def is_full_row(self,row):
-		print "is_full_row, row: {0}, i's:".format(row)
 		for i in range(self.field_size):
-			print i
 			if self.field[row][i] == 0:
 				return False
 		return True
 
 	def count_empty_row(self,row):
-		print "count_empty_row, row: {0}, i's:".format(row)
 		count = 0
 		for i in range(self.field_size):
-			print i
 			if self.field[row][i] == 0:
 				count += 1
 		return count
 
 	def is_full_column(self,column):
-		print "is_full_column, column: {0}, i's:".format(column)
 		for i in range(self.field_size):
-			print i
 			if self.field[i][column] == 0:
 				return False
 		return True
 
 	def count_empty_column(self,column):
-		print "count_empty_column: {0}, i's:".format(column)
 		count = 0
 		for i in range(self.field_size):
-			print i
 			if self.field[i][column] == 0:
 				count += 1
 		return count
 	
 	def is_full_spot(self,row,column):
-		print "is_full_spot row:{0}, column:{1}".format(row,column)
 		return not self.field[row][column] == 0
 
 	def is_full_field(self):
-		print "is_full_field, i's:"
 		for i in range(self.field_size):
-			print i
 			if not self.is_full_row(i):
 				return False
 		return True
 
 	def add_random_number(self):
-		print "add_random_number"
-		# TODO: testing. a lot of testing
-		# ?optimization? - choose randint from list of already calculated empty rows/columns -> will see how this version does
 		if not self.is_full_field():
 			row = random.randint(0,self.field_size-1)
 			while self.is_full_row(row):row = random.randint(0,self.field_size-1)
-			print "ROW: {0}".format(row)
 			column = random.randint(0,self.field_size-1)
 			while self.is_full_spot(row,column):column = random.randint(0,self.field_size-1)
-			print "COLUMN: {0}".format(column)
-			value = random.randint(0,2)
-			value = 2 if value == 0 or value == 1 else 4 # not yet sure if this would be the right ratio
+			value = random.randint(0,3)
+			value = 2 if value == 0 or value == 1 or value == 2 else 4 # not yet sure if this would be the right ratio
 			self.field[row][column] = value
 			return True
 		return False
@@ -155,19 +133,10 @@ class Game():
 # field:
 field = Field(4)
 
-#print field.pretty_print()
-
 pp = pprint.PrettyPrinter(indent=4)
-#pp.pprint(field.get_field())
-
-#field.set_value(1,2,4)
-#field.set_value(0,2,2)
-#field.set_value(3,3,2)
 
 pp.pprint(field.get_field())
 
-for i in range(5):
+for i in range(17):
 	field.add_random_number()
 	pp.pprint(field.get_field())
-
-#print field.pretty_print()
