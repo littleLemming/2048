@@ -4,18 +4,22 @@ import pprint
 class Field():
 
 	def __init__(self,size):
+		print "init size: {0}".format(size)
 		self.field_size = size if size > 2 else 4
 		self.field = [[0]*self.field_size for i in range(self.field_size)]
 
 	def get_field(self):
+		print "get_field"
 		return self.field
 
 	def get_row(self,row_num):
+		print "get_row, row_num: {0}".format(row_num)
 		if row_num < self.field_size:
 			return self.field[row_num]
 		return None
 
 	def get_column(self,column_num):
+		print "get_column, column_num: {0}".format(column_num)
 		if column_num < self.field_size:
 			column = [0]*self.field_size
 			for i in range(self.field_size):
@@ -46,8 +50,8 @@ class Field():
 		return True
 
 	def count_empty_row(self,row):
-		count = 0
 		print "count_empty_row, row: {0}, i's:".format(row)
+		count = 0
 		for i in range(self.field_size):
 			print i
 			if self.field[row][i] == 0:
@@ -72,15 +76,19 @@ class Field():
 		return count
 	
 	def is_full_spot(self,row,column):
+		print "is_full_spot"
 		return not self.field[row][column] == 0
 
 	def is_full_field(self):
+		print "is_full_field, i's:"
 		for i in range(self.field_size):
+			print i
 			if not self.is_full_row(i):
 				return False
 		return True
 
 	def add_random_number(self):
+		print "add_random_number"
 		# TODO: testing. a lot of testing
 		# ?optimization? - choose randint from list of already calculated empty rows/columns -> will see how this version does
 		if not self.is_full_field():
