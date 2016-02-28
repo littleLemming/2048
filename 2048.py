@@ -110,9 +110,7 @@ class Field():
 		if direction != 'to_start' and direction != 'to_end':
 			return None
 		if direction == 'to_end':
-			array_to_sort = reversed(array)
-		else:
-			array_to_sort = array
+			array = reversed(array)
 		last = 0
 		help_array = [0]*self.field_size
 		at = -1
