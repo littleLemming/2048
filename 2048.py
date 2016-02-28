@@ -101,6 +101,48 @@ class Field():
 			return True
 		return False
 
+	# pushes all of the numbers to eithter the start or end of the array, if there are two spots with the same number 
+	# next to each other, irrelevant if there are empyt spots inbetween they get merged into one (the value is double
+	# the original value of each of the spots)
+	# returns new, sorted array if sorting works, else None
+	# TODO: extensive testing
+	def resort_array(self,array,direction):
+		if direction != 'to_start' and direction != 'to_end':
+			return None
+		if direction == 'to_end':
+			array_to_sort = reversed(array)
+		else:
+			array_to_sort = array
+		last = 0
+		help_array = [0]*self.field_size
+		at = -1
+		for i in array:
+			if i != 0:
+				if at == -1:
+					help_array[0] = i
+					at = 0
+				else:
+					if help_array[at] == 0:
+						help_array[at] = i
+					elif help_array[at] == i:
+						help_array[at] = help_array[at]*2
+						at += 1
+					else:
+						at += 1
+						help_array[at] = i
+		return help_array
+		else:
+			return None
+			
+
+	def push_right(self):
+
+	def push_left(self):
+
+	def push_up(self):
+
+	def push_down(self):
+
 
 class Game():
 
