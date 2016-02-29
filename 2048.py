@@ -132,7 +132,9 @@ class Field():
 		else:
 			return None
 			
-
+	# represents the key-press events in the game
+	# calculates the new field
+	# TODO: check somehow if the field actually changed, if it does, add a new number
 	def push(self, direction):
 		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
 		sort_dir = 'to_start' if direction == 'left' or direction == 'up' else 'to_end'
@@ -146,7 +148,7 @@ class Field():
 					self.set_value(i,j,new_row[j])
 				else:
 					self.set_value(j,i,new_row[j])
-					
+
 
 class Game():
 
