@@ -101,6 +101,11 @@ class Field():
 			return True
 		return False
 
+	# return if a push in this direction will do anything - therefor has to be done
+	def can_push(self, direction):
+		# TODO
+		return False
+
 	# pushes all of the numbers to eithter the start or end of the array, if there are two spots with the same number 
 	# next to each other, irrelevant if there are empyt spots inbetween they get merged into one (the value is double
 	# the original value of each of the spots)
@@ -136,18 +141,23 @@ class Field():
 	# calculates the new field
 	# TODO: check somehow if the field actually changed, if it does, add a new number
 	def push(self, direction):
-		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
-		sort_dir = 'to_start' if direction == 'left' or direction == 'up' else 'to_end'
-		for i in range(0,self.field_size-1):
-			if direction == 'left' or direction == 'right':
-				new_row = self.resort_array(self.get_row(i),sort_dir)
-			else:
-				new_column = self.resort_array(self.get_column(i)),sort_dir)
-			for j in range(0,self.field_size-1):
+		if self.can_push():
+			if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
+			sort_dir = 'to_start' if direction == 'left' or direction == 'up' else 'to_end'
+			for i in range(0,self.field_size-1):
 				if direction == 'left' or direction == 'right':
-					self.set_value(i,j,new_row[j])
+					new_row = self.resort_array(self.get_row(i),sort_dir)
 				else:
-					self.set_value(j,i,new_row[j])
+					new_column = self.resort_array(self.get_column(i)),sort_dir)
+				for j in range(0,self.field_size-1):
+					if direction == 'left' or direction == 'right':
+						self.set_value(i,j,new_row[j])
+					else:
+						self.set_value(j,i,new_row[j])
+			self.add_random_number()
+		else:
+			#TODO
+			return
 
 
 class Game():
