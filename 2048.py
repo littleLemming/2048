@@ -133,14 +133,45 @@ class Field():
 			return None
 			
 
+	def push(self, direction):
+		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
+		sort_dir = 'to_start' if direction == 'left' or direction == 'up' else 'to_end'
+		for i in range(0,self.field_size-1):
+			if direction == 'left' or direction == 'right':
+				new_row = self.resort_array(self.get_row(i),sort_dir)
+			else:
+				new_column = self.resort_array(self.get_column(i)),sort_dir)
+			for j in range(0,self.field_size-1):
+				if direction == 'left' or direction == 'right':
+					self.set_value(i,j,new_row[j])
+				else:
+					self.set_value(j,i,new_row[j])
+				
+
+
 	def push_right(self):
+		for i in range(0,self.field_size-1):
+			new_row = self.resort_array(self.get_row(i),'to_end')
+			for j in range(0,self.field_size-1):
+				self.set_value(i,j,new_row[j])
 
 	def push_left(self):
+		for i in range(0,self.field_size-1):
+			new_row = self.resort_array(self.get_row(i),'to_start')
+			for j in range(0,self.field_size-1):
+				self.set_value(i,j,new_row[j])
 
 	def push_up(self):
+		for i in range(0,self.field_size-1):
+			new_column = self.resort_array(self.get_column(i)),'to_start')
+			for j in range(0,self.field_size-1):
+				self.set_value(j,i,new_row[j])
 
 	def push_down(self):
-
+		for i in range(0,self.field_size-1):
+			new_column = self.resort_array(self.get_column(i)),'to_end')
+			for j in range(0,self.field_size-1):
+				self.set_value(j,i,new_row[j])
 
 class Game():
 
