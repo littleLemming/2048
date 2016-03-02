@@ -8,6 +8,8 @@ class Field():
 	def __init__(self,size):
 		self.field_size = size if size > 2 else 4
 		self.field = [[0]*self.field_size for i in range(self.field_size)]
+		self.add_random_number()
+		self.add_random_number()
 
 	# returns the multidimensional array that represents the field
 	# should not be used outside of testing
@@ -38,7 +40,7 @@ class Field():
 	# sets the spcified spot at row/column to value
 	# should not be used from anywhere except from inside the class 'Field' or for testing
 	def set_value(self,row,column,value):
-		if row < self.field_size and and row >= 0 column < self.field_size and column >= 0:
+		if row < self.field_size and row >= 0 and column < self.field_size and column >= 0:
 			self.field[row][column] = value
 			return True
 		return False
@@ -134,30 +136,25 @@ class Field():
 						at += 1
 						help_array[at] = i
 		return help_array
-		else:
-			return None
 			
 	# represents the key-press events in the game
 	# calculates the new field
 	# TODO: check somehow if the field actually changed, if it does, add a new number
 	def push(self, direction):
-		if self.can_push():
+		if self.can_push(direction):
 			if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
 			sort_dir = 'to_start' if direction == 'left' or direction == 'up' else 'to_end'
 			for i in range(0,self.field_size-1):
 				if direction == 'left' or direction == 'right':
 					new_row = self.resort_array(self.get_row(i),sort_dir)
 				else:
-					new_column = self.resort_array(self.get_column(i)),sort_dir)
+					new_column = self.resort_array(self.get_column(i),sort_dir)
 				for j in range(0,self.field_size-1):
 					if direction == 'left' or direction == 'right':
 						self.set_value(i,j,new_row[j])
 					else:
 						self.set_value(j,i,new_row[j])
 			self.add_random_number()
-		else:
-			#TODO
-			return
 
 
 class Game():
@@ -209,11 +206,14 @@ class Game():
 
 # field:
 field = Field(4)
-
 pp = pprint.PrettyPrinter(indent=4)
 
 pp.pprint(field.get_field())
 
-for i in range(17):
-	field.add_random_number()
+dirs = ['up','down','right','left']
+
+for i in range(10):
+	direction = dirs[random.randint(0,3)]
+	print direction
+	field.push(direction)
 	pp.pprint(field.get_field())
