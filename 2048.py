@@ -104,6 +104,7 @@ class Field():
 		return False
 
 	# return if a push in this direction will do anything - therefor has to be done
+	# TODO: parallel. could so easily be done parallel
 	def can_push(self, direction):
 		# TODO
 		return False
@@ -113,6 +114,7 @@ class Field():
 	# the original value of each of the spots)
 	# returns new, sorted array if sorting works, else None
 	# TODO: extensive testing
+	# TODO: parallel. could so easily be done parallel
 	def resort_array(self,array,direction):
 		if direction != 'to_start' and direction != 'to_end':
 			return None
@@ -139,7 +141,6 @@ class Field():
 			
 	# represents the key-press events in the game
 	# calculates the new field
-	# TODO: check somehow if the field actually changed, if it does, add a new number
 	def push(self, direction):
 		if self.can_push(direction):
 			if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
