@@ -105,6 +105,7 @@ class Field():
 
 	# return if a push in this direction will do anything - therefor has to be done
 	def can_push(self, direction):
+		print 'can_push: {0}'.format(direction)
 		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
 		if direction == 'up' or direction == 'left':
 			i = 0
@@ -149,6 +150,7 @@ class Field():
 	# TODO: extensive testing
 	# TODO: parallel. could so easily be done parallel
 	def resort_array(self,array,direction):
+		print 'resort_array array: {0}, direction: {1}'.format(array, direction)
 		if direction != 'to_start' and direction != 'to_end':
 			return None
 		if direction == 'to_end':
@@ -175,6 +177,7 @@ class Field():
 	# represents the key-press events in the game
 	# calculates the new field
 	def push(self, direction):
+		print 'push: {0}'.format(direction)
 		if self.can_push(direction):
 			if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
 			sort_dir = 'to_start' if direction == 'left' or direction == 'up' else 'to_end'
