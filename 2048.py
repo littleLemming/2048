@@ -104,10 +104,43 @@ class Field():
 		return False
 
 	# return if a push in this direction will do anything - therefor has to be done
-	# TODO: parallel. could so easily be done parallel
 	def can_push(self, direction):
-		# TODO
+		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
+		if direction == 'up' or direction == 'left':
+			i = 0
+			add = 1
+		else:
+			i = self.field_size-1
+			add = -1
+		empty = []
+		values = {}
+		first = True
+		while i >= 0 and i < self.field_size:
+			if direction == 'left' or direction == 'right':
+				line = self.get_column(i)
+			else:
+				line = self.get_row(i)
+			j = 0
+			while j < self.field_size:
+				value = line[j]
+				if not first:
+					if value == 0:
+						if empty.count(j) == 0: empty.append(j)
+					else:
+						if empty.count(j) != 0 or values[j] == value: 
+							return True
+						else:
+							values[j] = value
+				else:
+					if value == 0:
+						empty.append(j)
+					else:
+						values[j] = value
+			first = False
+			i += add
 		return False
+
+
 
 	# pushes all of the numbers to eithter the start or end of the array, if there are two spots with the same number 
 	# next to each other, irrelevant if there are empyt spots inbetween they get merged into one (the value is double
