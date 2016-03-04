@@ -104,6 +104,7 @@ class Field():
 		return False
 
 	# return if a push in this direction will do anything - therefor has to be done
+	# TODO - testing.
 	def can_push(self, direction):
 		print 'can_push: {0}'.format(direction)
 		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
@@ -116,19 +117,24 @@ class Field():
 		empty = []
 		values = {}
 		first = True
+		print 'i\'s:'
 		while i >= 0 and i < self.field_size:
+			print 'i: {0}'.format(i)
 			if direction == 'left' or direction == 'right':
 				line = self.get_column(i)
 			else:
 				line = self.get_row(i)
 			j = 0
+			print 'j\'s:'
 			while j < self.field_size:
+				print 'j: {0}'.format(j)
 				value = line[j]
 				if not first:
 					if value == 0:
 						if empty.count(j) == 0: empty.append(j)
 					else:
 						if empty.count(j) != 0 or values[j] == value: 
+							print 'can_push: True'
 							return True
 						else:
 							values[j] = value
@@ -137,8 +143,10 @@ class Field():
 						empty.append(j)
 					else:
 						values[j] = value
+				j += 1
 			first = False
 			i += add
+		print 'can_push: False'
 		return False
 
 
