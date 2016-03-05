@@ -160,9 +160,42 @@ class Field():
 		print 'resort_array array: {0}, direction: {1}'.format(array, direction)
 		if direction != 'to_start' and direction != 'to_end':
 			return None
-		
+		new_array = [0]*self.field_size
+		if direction == 'to_start':
+			for i in range(0,self.field_size):
+				new_array[i] = array[i]
+		else:
+			j = self.field_size-1
+			for i in range(0,self.field_size):
+				new_array[j] = array[i]
+		print 'possibly reversed array: {0}'.format(new_array)
+		last = 0
+		help_array = [0]*self.field_size
+		at = -1
+		for i in new_array:
+			if i != 0:
+				if at == -1:
+					help_array[0] = i
+					at = 0
+				else:
+					if help_array[at] == 0:
+						help_array[at] = i
+					elif help_array[at] == i:
+						help_array[at] = help_array[at]*2
+						at += 1
+					else:
+						at += 1
+						help_array[at] = i
+		if direction == 'to_end':
+			new_array = [0]*self.field_size
+			j = self.field_size-1
+			for i in range(0,self.field_size):
+				new_array[j] = array[i]
+			help_array = new_array
 		print 'resorted_array: {0}'.format(help_array)
 		return help_array
+
+		
 			
 	# represents the key-press events in the game
 	# calculates the new field
