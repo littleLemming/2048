@@ -161,8 +161,16 @@ class Field():
 		print 'resort_array array: {0}, direction: {1}'.format(array, direction)
 		if direction != 'to_start' and direction != 'to_end':
 			return None
+		new_array = [0]*self.field_size
 		if direction == 'to_end':
-			array = reversed(array)
+			j = self.field_size-1
+			for i in range(0,self.field_size):
+				new_array[i] = array[j]
+				j -= 1
+		else:
+			for i in range(0,self.field_size):
+				new_array[i] = array[i]
+		print 'possibly reversed array: {0}'.format(new_array)
 		last = 0
 		help_array = [0]*self.field_size
 		at = -1
@@ -189,12 +197,12 @@ class Field():
 		if self.can_push(direction):
 			if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
 			sort_dir = 'to_start' if direction == 'left' or direction == 'up' else 'to_end'
-			for i in range(0,self.field_size-1):
+			for i in range(0,self.field_size):
 				if direction == 'left' or direction == 'right':
 					new_row = self.resort_array(self.get_row(i),sort_dir)
 				else:
 					new_column = self.resort_array(self.get_column(i),sort_dir)
-				for j in range(0,self.field_size-1):
+				for j in range(0,self.field_size):
 					if direction == 'left' or direction == 'right':
 						self.set_value(i,j,new_row[j])
 					else:
