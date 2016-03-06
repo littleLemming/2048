@@ -167,7 +167,8 @@ class Field():
 		else:
 			j = self.field_size-1
 			for i in range(0,self.field_size):
-				new_array[j] = array[i]
+				new_array[i] = array[j]
+				j -= 1
 		print 'possibly reversed array: {0}'.format(new_array)
 		last = 0
 		help_array = [0]*self.field_size
@@ -187,11 +188,13 @@ class Field():
 						at += 1
 						help_array[at] = i
 		if direction == 'to_end':
-			new_array = [0]*self.field_size
+			#new_array = [0]*self.field_size
 			j = self.field_size-1
 			for i in range(0,self.field_size):
-				new_array[j] = array[i]
-			help_array = new_array
+				new_array[i] = help_array[j]
+				j -= 1
+			print 'resorted_array: {0}'.format(new_array)
+			return new_array
 		print 'resorted_array: {0}'.format(help_array)
 		return help_array
 
@@ -199,6 +202,7 @@ class Field():
 			
 	# represents the key-press events in the game
 	# calculates the new field
+	# TODO fix
 	def push(self, direction):
 		print 'push: {0}'.format(direction)
 		if self.can_push(direction):
@@ -213,7 +217,7 @@ class Field():
 					if direction == 'left' or direction == 'right':
 						self.set_value(i,j,new_row[j])
 					else:
-						self.set_value(j,i,new_row[j])
+						self.set_value(j,i,new_column[j])
 			self.add_random_number()
 
 
@@ -267,6 +271,9 @@ class Game():
 # field:
 field = Field(4)
 pp = pprint.PrettyPrinter(indent=4)
+
+for i in range(5):
+	field.add_random_number()
 
 pp.pprint(field.get_field())
 
