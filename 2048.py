@@ -106,7 +106,7 @@ class Field():
 	# return if a push in this direction will do anything - therefor has to be done
 	# TODO - testing.
 	def can_push(self, direction):
-		print 'can_push: {0}'.format(direction)
+		print('can_push: {0}'.format(direction))
 		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
 		if direction == 'up' or direction == 'left':
 			i = 0
@@ -117,24 +117,24 @@ class Field():
 		empty = []
 		values = {}
 		first = True
-		print 'i\'s:'
+		print('i\'s:')
 		while i >= 0 and i < self.field_size:
-			print 'i: {0}'.format(i)
+			print('i: {0}'.format(i))
 			if direction == 'left' or direction == 'right':
 				line = self.get_column(i)
 			else:
 				line = self.get_row(i)
 			j = 0
-			print 'j\'s:'
+			print('j\'s:')
 			while j < self.field_size:
-				print 'j: {0}'.format(j)
+				print('j: {0}'.format(j))
 				value = line[j]
 				if not first:
 					if value == 0:
 						if empty.count(j) == 0: empty.append(j)
 					else:
 						if empty.count(j) != 0 or values[j] == value: 
-							print 'can_push: True'
+							print('can_push: True')
 							return True
 						else:
 							values[j] = value
@@ -146,7 +146,7 @@ class Field():
 				j += 1
 			first = False
 			i += add
-		print 'can_push: False'
+		print('can_push: False')
 		return False
 
 
@@ -157,7 +157,7 @@ class Field():
 	# returns new, sorted array if sorting works, else None
 	# TODO: extensive testing
 	def resort_array(self,array,direction):
-		print 'resort_array array: {0}, direction: {1}'.format(array, direction)
+		print('resort_array array: {0}, direction: {1}'.format(array, direction))
 		if direction != 'to_start' and direction != 'to_end':
 			return None
 		new_array = [0]*self.field_size
@@ -169,7 +169,7 @@ class Field():
 			for i in range(0,self.field_size):
 				new_array[i] = array[j]
 				j -= 1
-		print 'possibly reversed array: {0}'.format(new_array)
+		print('possibly reversed array: {0}'.format(new_array))
 		last = 0
 		help_array = [0]*self.field_size
 		at = -1
@@ -193,9 +193,9 @@ class Field():
 			for i in range(0,self.field_size):
 				new_array[i] = help_array[j]
 				j -= 1
-			print 'resorted_array: {0}'.format(new_array)
+			print('resorted_array: {0}'.format(new_array))
 			return new_array
-		print 'resorted_array: {0}'.format(help_array)
+		print('resorted_array: {0}'.format(help_array))
 		return help_array
 
 		
@@ -204,7 +204,7 @@ class Field():
 	# calculates the new field
 	# TODO fix
 	def push(self, direction):
-		print 'push: {0}'.format(direction)
+		print('push: {0}'.format(direction))
 		if self.can_push(direction):
 			if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
 			sort_dir = 'to_start' if direction == 'left' or direction == 'up' else 'to_end'
@@ -229,7 +229,7 @@ class Game():
 		field = Field(size)
 		for i in [1,2]:
 			if not self.add_number():
-				print 'cannot add {0}'.format(i)
+				print('cannot add {0}'.format(i))
 				raise StandardError
 
 	# to be called after the field has been pushed or twice in the very beginning
@@ -281,6 +281,6 @@ dirs = ['up','down','right','left']
 
 for i in range(10):
 	direction = dirs[random.randint(0,3)]
-	print direction
+	print(direction)
 	field.push(direction)
 	pp.pprint(field.get_field())
