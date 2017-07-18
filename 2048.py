@@ -12,7 +12,6 @@ class Field():
 		self.add_random_number()
 
 	# returns the multidimensional array that represents the field
-	# should not be used outside of testing
 	def get_field(self):
 		return self.field
 
