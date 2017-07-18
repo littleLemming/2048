@@ -104,7 +104,6 @@ class Field():
 
 	# return if a push in this direction will do anything - therefor has to be done
 	def can_push(self, direction):
-		print('can_push: {0}'.format(direction))
 		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
 		if direction == 'up' or direction == 'left':
 			i = 0
@@ -125,84 +124,18 @@ class Field():
 			for x in line:
 				if last != -1:
 					if (last != 0 and x == last) or (last == 0 and x != 0):
-						print('can_push: True')
 						return True
 				last = x
 			last = -1
 			i += add
-		print('can_push: False')
 		return False
-
-
-
-	# pushes all of the numbers to eithter the start or end of the array, if there are two spots with the same number 
-	# next to each other, irrelevant if there are empyt spots inbetween they get merged into one (the value is double
-	# the original value of each of the spots)
-	# returns new, sorted array if sorting works, else None
-	# TODO: extensive testing
-	def resort_array(self,array,direction):
-		print('resort_array array: {0}, direction: {1}'.format(array, direction))
-		if direction != 'to_start' and direction != 'to_end':
-			return None
-		new_array = [0]*self.field_size
-		if direction == 'to_start':
-			for i in range(0,self.field_size):
-				new_array[i] = array[i]
-		else:
-			j = self.field_size-1
-			for i in range(0,self.field_size):
-				new_array[i] = array[j]
-				j -= 1
-		print('possibly reversed array: {0}'.format(new_array))
-		last = 0
-		help_array = [0]*self.field_size
-		at = -1
-		for i in new_array:
-			if i != 0:
-				if at == -1:
-					help_array[0] = i
-					at = 0
-				else:
-					if help_array[at] == 0:
-						help_array[at] = i
-					elif help_array[at] == i:
-						help_array[at] = help_array[at]*2
-						at += 1
-					else:
-						at += 1
-						help_array[at] = i
-		if direction == 'to_end':
-			#new_array = [0]*self.field_size
-			j = self.field_size-1
-			for i in range(0,self.field_size):
-				new_array[i] = help_array[j]
-				j -= 1
-			print('resorted_array: {0}'.format(new_array))
-			return new_array
-		print('resorted_array: {0}'.format(help_array))
-		return help_array
-
-		
 			
 	# represents the key-press events in the game
 	# calculates the new field
 	# TODO fix
 	def push(self, direction):
-		print('push: {0}'.format(direction))
 		if self.can_push(direction):
-			if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
-			sort_dir = 'to_start' if direction == 'left' or direction == 'up' else 'to_end'
-			for i in range(0,self.field_size):
-				if direction == 'left' or direction == 'right':
-					new_row = self.resort_array(self.get_row(i),sort_dir)
-				else:
-					new_column = self.resort_array(self.get_column(i),sort_dir)
-				for j in range(0,self.field_size):
-					if direction == 'left' or direction == 'right':
-						self.set_value(i,j,new_row[j])
-					else:
-						self.set_value(j,i,new_column[j])
-			self.add_random_number()
+			print('push: {0}'.format(direction))
 
 
 class Game():
