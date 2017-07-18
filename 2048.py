@@ -103,7 +103,6 @@ class Field():
 		return False
 
 	# return if a push in this direction will do anything - therefor has to be done
-	# TODO - testing.
 	def can_push(self, direction):
 		print('can_push: {0}'.format(direction))
 		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
@@ -113,37 +112,23 @@ class Field():
 		else:
 			i = self.field_size-1
 			add = -1
-		empty = []
-		values = {}
-		first = True
-		print('i\'s:')
+		last = -1
 		while i >= 0 and i < self.field_size:
 			print('i: {0}'.format(i))
 			if direction == 'left' or direction == 'right':
-				line = self.get_column(i)
-			else:
 				line = self.get_row(i)
+			else:
+				line = self.get_column(i)
 			j = 0
-			print('j\'s:')
-			while j < self.field_size:
-				print('j: {0}'.format(j))
-				value = line[j]
-				if not first:
-					if value == 0:
-						if empty.count(j) == 0: empty.append(j)
-					else:
-						if empty.count(j) != 0 or values[j] == value: 
-							print('can_push: True')
-							return True
-						else:
-							values[j] = value
-				else:
-					if value == 0:
-						empty.append(j)
-					else:
-						values[j] = value
-				j += 1
-			first = False
+			if direction == 'right' or direction == 'down':
+				line = reversed(line)
+			for x in line:
+				if last != -1:
+					if (last != 0 and x == last) or (last == 0 and x != 0):
+						print('can_push: True')
+						return True
+				last = x
+			last = -1
 			i += add
 		print('can_push: False')
 		return False
@@ -269,17 +254,20 @@ class Game():
 
 # field:
 field = Field(4)
+dirs = ['up','down','right','left']
 pp = pprint.PrettyPrinter(indent=4)
 
-for i in range(5):
+pp.pprint(field.get_field())
+
+"""for i in range(5):
 	field.add_random_number()
 
 pp.pprint(field.get_field())
 
-dirs = ['up','down','right','left']
+
 
 for i in range(10):
 	direction = dirs[random.randint(0,3)]
 	print(direction)
 	field.push(direction)
-	pp.pprint(field.get_field())
+	pp.pprint(field.get_field())"""
