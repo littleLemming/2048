@@ -10,6 +10,7 @@ class Field():
 		self.field = [[0]*self.field_size for i in range(self.field_size)]
 		self.add_random_number()
 		self.add_random_number()
+		self.game_over = False
 
 	# returns the multidimensional array that represents the field
 	def get_field(self):
@@ -134,7 +135,6 @@ class Field():
 			
 	# represents the key-press events in the game
 	# calculates the new field
-	# TODO
 	def push(self, direction):
 		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return False
 		print('push: {0}'.format(direction))
@@ -176,7 +176,9 @@ class Field():
 				self.set_row(i, new_line)
 			else:
 				self.set_column(i, new_line)
-		return False
+		if not self.add_random_number():
+			self.game_over = True
+		return True
 
 
 
