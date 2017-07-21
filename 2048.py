@@ -38,7 +38,6 @@ class Field():
 	# sets the row at column_num to the column
 	def set_column(self,column_num, column):
 		if column_num < self.field_size and column_num >= 0 and len(column) == self.field_size:
-			self.field[column_num] = column
 			for i in range(self.field_size):
 				self.field[i][column_num] = column[i]
 
@@ -138,17 +137,45 @@ class Field():
 	# TODO
 	def push(self, direction):
 		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return False
-		"""if not self.can_push(direction):
-			print('cannot push')
-			return False"""
 		print('push: {0}'.format(direction))
+		if not self.can_push(direction):
+			print('cannot push')
+			return False
 		for i in range(0, self.field_size):
+			last = -1
 			if direction == 'left' or direction == 'right':
 				line = list(self.get_row(i))
 			else:
 				line = list(self.get_column(i))
 			if direction == 'right' or direction == 'down':
 				line = line[::-1]
+			new_line = [0]*self.field_size
+			spot = 0
+			for x in line:
+				if spot >= self.field_size:
+					raise Exception('push not working', 'serious error in push-method')
+				if x != 0:
+					if last != -1:
+						if x == last:
+							new_line[spot] = x**2
+							last = -1
+							spot += 1
+						else:
+							new_line[spot] = last
+							last = x
+							spot += 1
+					else:
+						last = x
+			if last != -1 and spot >= self.field_size:
+				raise Exception('push not working', 'serious error in push-method')
+			if last != -1:
+				new_line[spot] = last
+			if direction == 'right' or direction == 'down':
+				new_line = new_line[::-1]
+			if direction == 'left' or direction == 'right':
+				self.set_row(i, new_line)
+			else:
+				self.set_column(i, new_line)
 		return False
 
 
@@ -205,9 +232,9 @@ field = Field(4)
 dirs = ['up','down','right','left']
 pp = pprint.PrettyPrinter(indent=4)
 
-pp.pprint(field.get_field())
-
 for i in dirs:
+	field.field = [[2,2,0,0],[0,2,0,0],[0,0,0,0],[0,0,0,0]]
+	pp.pprint(field.get_field())
 	field.push(i)
 	pp.pprint(field.get_field())
 
