@@ -21,6 +21,11 @@ class Field():
 			return self.field[row_num]
 		return None
 
+	# sets the row at row_num to the row
+	def set_row(self,row_num, row):
+		if row_num < self.field_size and row_num >= 0 and len(row) == self.field_size:
+			self.field[row_num] = row
+
 	# returns an array of the column with the column_num
 	def get_column(self,column_num):
 		if column_num < self.field_size and column_num >= 0:
@@ -29,6 +34,13 @@ class Field():
 				column[i] = self.field[i][column_num]
 			return column
 		return None
+
+	# sets the row at column_num to the column
+	def set_column(self,column_num, column):
+		if column_num < self.field_size and column_num >= 0 and len(column) == self.field_size:
+			self.field[column_num] = column
+			for i in range(self.field_size):
+				self.field[i][column_num] = column[i]
 
 	#returns the value of the spot at row/column
 	def get_value(self,row,column):
@@ -104,38 +116,41 @@ class Field():
 
 	# return if a push in this direction will do anything - therefor has to be done
 	def can_push(self, direction):
-		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return
-		if direction == 'up' or direction == 'left':
-			i = 0
-			add = 1
-		else:
-			i = self.field_size-1
-			add = -1
+		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return False
 		last = -1
-		while i >= 0 and i < self.field_size:
-			print('i: {0}'.format(i))
+		for i in range(0, self.field_size):
 			if direction == 'left' or direction == 'right':
-				line = self.get_row(i)
+				line = list(self.get_row(i))
 			else:
-				line = self.get_column(i)
-			j = 0
+				line = list(self.get_column(i))
 			if direction == 'right' or direction == 'down':
-				line = reversed(line)
+				line = line[::-1]
 			for x in line:
 				if last != -1:
 					if (last != 0 and x == last) or (last == 0 and x != 0):
 						return True
 				last = x
 			last = -1
-			i += add
 		return False
 			
 	# represents the key-press events in the game
 	# calculates the new field
-	# TODO fix
+	# TODO
 	def push(self, direction):
-		if self.can_push(direction):
-			print('push: {0}'.format(direction))
+		if not (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'): return False
+		"""if not self.can_push(direction):
+			print('cannot push')
+			return False"""
+		print('push: {0}'.format(direction))
+		for i in range(0, self.field_size):
+			if direction == 'left' or direction == 'right':
+				line = list(self.get_row(i))
+			else:
+				line = list(self.get_column(i))
+			if direction == 'right' or direction == 'down':
+				line = line[::-1]
+		return False
+
 
 
 class Game():
@@ -191,6 +206,10 @@ dirs = ['up','down','right','left']
 pp = pprint.PrettyPrinter(indent=4)
 
 pp.pprint(field.get_field())
+
+for i in dirs:
+	field.push(i)
+	pp.pprint(field.get_field())
 
 """for i in range(5):
 	field.add_random_number()
