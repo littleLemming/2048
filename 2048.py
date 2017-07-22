@@ -6,7 +6,7 @@ class Field():
 	# constructor
 	# size: should be lager than 2 - sets the length and width of the field
 	def __init__(self,size):
-		self.field_size = size if size > 2 else 4
+		self.field_size = size if size >= 3 and size <= 20 else 4
 		self.field = [[0]*self.field_size for i in range(self.field_size)]
 		self.add_random_number()
 		self.add_random_number()
@@ -185,32 +185,27 @@ class Field():
 
 
 
-#class Game():
+class Game():
 
-	
+	# constructor
+	def __init__(self):
+		self.start_game()
 
-###############TESTING###############
+	def start_game(self):
+		size_s = input("Please enter the size for the game: (minimum is 3, maximum is 20 - if you enter a number out of those bounds the field-size will be 4) ")
+		while not size_s.isdigit():
+			size_s = input("Please enter a positive integer as the size for the game!")
+		self.field = Field(int(size_s))
+		print("Field size is: {0}\n".format(self.field.field_size))
+		self.print_field()
 
-# field:
-field = Field(4)
-dirs = ['up','down','right','left']
-pp = pprint.PrettyPrinter(indent=4)
+	def print_field(self):
+		print(self.field.field)
 
-for i in dirs:
-	field.field = [[2,2,0,0],[0,2,0,0],[0,0,0,0],[0,0,0,0]]
-	pp.pprint(field.get_field())
-	field.push(i)
-	pp.pprint(field.get_field())
-
-"""for i in range(5):
-	field.add_random_number()
-
-pp.pprint(field.get_field())
+	#def play(self):
 
 
+###############STARTING THE GAME###############
 
-for i in range(10):
-	direction = dirs[random.randint(0,3)]
-	print(direction)
-	field.push(direction)
-	pp.pprint(field.get_field())"""
+game = Game()
+
