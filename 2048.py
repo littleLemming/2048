@@ -158,7 +158,7 @@ class Field():
 				if x != 0:
 					if last != -1:
 						if x == last:
-							new_line[spot] = x**2
+							new_line[spot] = x*2
 							if new_line[spot] > self.max_num:
 								self.max_num = new_line[spot]
 							last = -1
@@ -189,7 +189,9 @@ class Game():
 
 	# constructor
 	def __init__(self):
+		self.field = None
 		self.start_game()
+		self.play()
 
 	def start_game(self):
 		size_s = input("Please enter the size for the game: (minimum is 3, maximum is 20 - if you enter a number out of those bounds the field-size will be 4) ")
@@ -200,9 +202,22 @@ class Game():
 		self.print_field()
 
 	def print_field(self):
-		print(self.field.field)
+		print("\n")
+		for i in self.field.field:
+			line = ''
+			for j in i:
+				line += str(j)
+				line += ' ' * (len(str(self.field.max_num))-len(str(j)))
+				line += ' ' * 5
+			print(line)
+		print("\n")
 
-	#def play(self):
+	def play(self):
+		dirs = ['left', 'up', 'down', 'right']
+		for i in range(30):
+			self.field.push(dirs[random.randint(0,3)])
+			self.print_field()
+
 
 
 ###############STARTING THE GAME###############
