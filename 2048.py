@@ -191,6 +191,7 @@ class Game():
 	def __init__(self):
 		self.field = None
 		self.start_game()
+		self.print_help()
 		self.play()
 
 	def start_game(self):
@@ -212,9 +213,25 @@ class Game():
 			print(line)
 		print("\n")
 
+	def print_help(self):
+		print("""\nThe goal of the game is to create a tile with the value of 2048. You may reach this goal by pushing the fields of the game up, down, right or left.
+By pushing the tiles in one of these directions they will move into that direction as far as possible. If there is a zero in the way the tile will move in its' space.
+If there is another number there are two possibilities - if they have the same number they will merge and the new number will be the sum of those two.
+Otherwise they will just move next to each other. Each tile may only merge once.\n""")
+		self.print_controls()
+
+	def print_controls(self):
+		print("""\nControls:\n
+			'up' or 'u' to move the field up\n
+			'down' or 'd' to move the field down\n
+			'left' or 'l' to move the field left\n
+			'right' or 'r' to move the field right\n
+			'reset' to start a new game\n
+			'help' or 'h' to get instructions on how to play\n\n\n""")
+
 	def play(self):
 		dirs = ['left', 'up', 'down', 'right']
-		for i in range(30):
+		for i in range(3):
 			self.field.push(dirs[random.randint(0,3)])
 			self.print_field()
 
