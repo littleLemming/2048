@@ -10,7 +10,6 @@ class Field():
 		self.field = [[0]*self.field_size for i in range(self.field_size)]
 		self.add_random_number()
 		self.add_random_number()
-		self.game_over = False
 		self.max_num = 0
 
 	# returns the multidimensional array that represents the field
@@ -179,8 +178,7 @@ class Field():
 				self.set_row(i, new_line)
 			else:
 				self.set_column(i, new_line)
-		if not self.add_random_number():
-			self.game_over = True
+		self.add_random_number()
 		return True
 
 
@@ -200,7 +198,6 @@ class Game():
 			size_s = input("Please enter a positive integer as the size for the game!")
 		self.field = Field(int(size_s))
 		print("Field size is: {0}\n".format(self.field.field_size))
-		self.print_field()
 
 	def print_field(self):
 		print("\n")
@@ -222,18 +219,50 @@ Otherwise they will just move next to each other. Each tile may only merge once.
 
 	def print_controls(self):
 		print("""\nControls:\n
-			'up' or 'u' to move the field up\n
-			'down' or 'd' to move the field down\n
-			'left' or 'l' to move the field left\n
-			'right' or 'r' to move the field right\n
-			'reset' to start a new game\n
-			'help' or 'h' to get instructions on how to play\n\n\n""")
+	'up' or 'u'	to move the field up\n
+	'down' or 'd'	to move the field down\n
+	'left' or 'l'	to move the field left\n
+	'right' or 'r'	to move the field right\n
+	'reset'		to start a new game\n
+	'help' or 'h'	to get instructions on how to play\n
+	'exit'		to quit the game\n\n""")
 
 	def play(self):
 		dirs = ['left', 'up', 'down', 'right']
-		for i in range(3):
-			self.field.push(dirs[random.randint(0,3)])
+		valid_moves = ['up', 'u', 'down', 'd', 'left', 'l', 'right', 'r', 'reset', 'help', 'h', 'exit']
+		while True:
 			self.print_field()
+			move_s = input("Your move: ")
+			if move_s not in valid_moves:
+				print("Invalid Input!")
+				self.print_controls()
+				continue
+			if move_s == 'exit':
+				break
+			if move_s == 'reset':
+				self.start_game()
+			if move_s == 'help' or move_s == 'h':
+				self.print_help()
+				continue
+			if move_s == 'up' or move_s == 'u':
+				if not self.field.push('up') and self.game_over():
+					break
+			if move_s == 'down' or move_s == 'd':
+				if not self.field.push('down') and self.game_over():
+					break
+			if move_s == 'left' or move_s == 'l':
+				if not self.field.push('left') and self.game_over():
+					break
+			if move_s == 'right' or move_s == 'r':
+				if not self.field.push('right') and self.game_over():
+					break
+		print("Good Game! See you again!")
+
+	def game_over(self):
+		if self.field.can_push('up') or self.field.can_push('down') or self.field.can_push('left') or self.field.can_push('right'):
+			return False
+		print("Sorry! There are no moves left!\nGAME OVER")
+		return True
 
 
 
